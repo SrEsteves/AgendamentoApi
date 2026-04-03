@@ -1,6 +1,7 @@
 namespace AgendamentoApi.DTOs;
 
-public record EditarPedidoDTO(
+public record EditarPedidoDTO
+(
     decimal NovoValor,
     string NovoStatus
 );
