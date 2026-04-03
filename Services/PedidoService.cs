@@ -60,5 +60,29 @@ namespace AgendamentoApi.Services
 
             return relatorioFinal;
         }
+
+        public async Task<bool> ExcluirPedidoAsync(int id)
+        {
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido == null) return false;
+
+            _context.Pedidos.Remove(pedido);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> AtualizarPedidoAsync(int id, EditarPedidoDTO dados)
+        {
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido == null) return false;
+
+            //atualiza apenas o que permitimos
+            pedido.ValorTotal = dados.NovoValor;
+            pedido.Status = dados.NovoStatus;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -58,6 +58,26 @@ namespace AgendamentoApi.Controllers
 
            return Ok(relatorio);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            var sucesso = await _pedidoService.ExcluirPedidoAsync(id);
+
+            if(!sucesso) return NotFound("Pedido não encontrado.");
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Atualizar(int id, [FromBody] EditarPedidoDTO dados)
+        {
+            var sucesso = await _pedidoService.AtualizarPedidoAsync(id, dados);
+
+            if (!sucesso) return NotFound("Pedido não encontrado para atualizar.");
+
+            return Ok("Pedido atualizado com sucesso!");
+        }
     }
 }
 
